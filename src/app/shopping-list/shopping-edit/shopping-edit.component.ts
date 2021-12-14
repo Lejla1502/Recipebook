@@ -21,15 +21,18 @@ export class ShoppingEditComponent implements OnInit {
   }
 
 
-  onAddClick(name:string, amount:number)
+  //we need to use any
+  onAddClick(name:string, amount)
   {
+    
+    console.log(parseInt(amount)+5);
     //this.newItemEvent.emit({name,amount}); 
     
     //this.newItemEvent.emit(new Ingredient(name, amount));
     // console.log(name, amount);
 
-    this.shoppingListService.addIngredients(new Ingredient(name,amount));
-
+    this.shoppingListService.addIngredientsByAmount(new Ingredient(name,parseInt(amount)));
+    //console.log(amount+5);
     //this.shoppingListService.ingredientNew.emit(new Ingredient(name,amount));
   }
 

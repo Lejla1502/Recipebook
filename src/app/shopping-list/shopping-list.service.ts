@@ -15,9 +15,31 @@ export class ShoppingListService{
         return this.ingredients.slice(); //we do slice so we can return copy of an array, not the actual reference
     }
 
-    addIngredients(ingredient:Ingredient)
+    addIngredient(ingredient:Ingredient)
     {
         this.ingredients.push(ingredient);
+        this.ingredientsChanged.emit(this.ingredients.slice());
+    }
+
+    addIngredientsByAmount(ingredient:Ingredient)
+    {
+        //console.log(ingredient.amount);
+        let isfound=false;
+        for(let i=0; i<this.ingredients.length;i++)
+        {
+            if(this.ingredients[i].name==ingredient.name)
+                {
+                    this.ingredients[i].amount+=ingredient.amount;
+                    //console.log(this.ingredients[i].amount);
+                    isfound=true;
+                    
+                }
+           
+        }
+
+        if(!isfound)
+            this.ingredients.push(ingredient);
+        
         this.ingredientsChanged.emit(this.ingredients.slice());
     }
 }
