@@ -1,7 +1,8 @@
-<div *ngIf="!isIdNan; else newdiv">
+<div *ngIf="editMode; else newdiv">
 <p>recipe-edit works!</p>
 <p>Recipe name: {{recipeName}}</p>
 </div>
 <ng-template #newdiv>
+    <p>Recipe name:</p>
     <input type="text" class="form-control" >
 </ng-template>
