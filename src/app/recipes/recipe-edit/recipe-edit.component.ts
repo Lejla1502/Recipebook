@@ -13,6 +13,7 @@ export class RecipeEditComponent implements OnInit {
   recipe: Recipe;
   recipeName = '';
   id:number;
+  isIdNan=false;
   changesSaved=false;
 
   constructor(private recipeService: RecipeService, private route: ActivatedRoute, private router:Router) { }
@@ -25,8 +26,19 @@ export class RecipeEditComponent implements OnInit {
           console.log(this.id);
         }
     );*/
-    this.recipe = this.recipeService.getRecipe(+this.route.snapshot.params['id']);
-    this.recipeName = this.recipe.name;
+    this.id=+this.route.snapshot.params['id'];
+   console.log(this.id);
+    if(isNaN(this.id) || this.id.toString()==='undefined')
+    {
+      this.isIdNan=true;
+      
+    }
+    else
+    {
+      this.recipe = this.recipeService.getRecipe(+this.route.snapshot.params['id']);
+      this.recipeName = this.recipe.name;
+    }
+      
   }
 
 }
