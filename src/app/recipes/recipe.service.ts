@@ -26,4 +26,10 @@ export class RecipeService{
           return this.recipes.slice(); //we do slice so we can return copy of an array, not the actual reference
       }
 
+      getRecipe(index: number) {
+    
+        const recipe = this.recipes[index];
+        console.log(index);
+        return recipe;
+      }
 }
