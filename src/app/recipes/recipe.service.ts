@@ -29,7 +29,7 @@ export class RecipeService{
       getRecipe(index: number) {
     
         const recipe = this.recipes[index];
-        console.log(index);
+     
         return recipe;
       }
 }
