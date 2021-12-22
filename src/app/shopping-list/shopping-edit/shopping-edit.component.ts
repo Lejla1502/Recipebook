@@ -1,4 +1,5 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { NgForm } from '@angular/forms';
 import { Ingredient } from '../../shared/ingredient.model';
 import { ShoppingListService } from '../shopping-list.service';
 
@@ -22,18 +23,24 @@ export class ShoppingEditComponent implements OnInit {
 
 
   //we need to use any
-  onAddClick(name:string, amount)
+  onAddClick(form:NgForm)
   {
     
-    console.log(parseInt(amount)+5);
+    //console.log(parseInt(amount)+5);
     //this.newItemEvent.emit({name,amount}); 
     
     //this.newItemEvent.emit(new Ingredient(name, amount));
     // console.log(name, amount);
 
-    this.shoppingListService.addIngredientsByAmount(new Ingredient(name,parseInt(amount)));
+    const value=form.value;
+   
+    this.shoppingListService.addIngredientsByAmount(new Ingredient(value.name,value.amount));
     //console.log(amount+5);
     //this.shoppingListService.ingredientNew.emit(new Ingredient(name,amount));
+  }
+
+  onSubmit(){
+
   }
 
 }
