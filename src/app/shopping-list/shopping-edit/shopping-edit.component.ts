@@ -16,8 +16,11 @@ export class ShoppingEditComponent implements OnInit, OnDestroy {
 
   igEditSub:Subscription;
   editMode=false;
-  id:number;
+  editedItemIndex:number;
   editingIngredient:Ingredient;
+
+  name:any;
+  amount:number;
 
   @ViewChild('f',{static:false}) slForm:NgForm;
 
@@ -29,9 +32,9 @@ export class ShoppingEditComponent implements OnInit, OnDestroy {
     this.igEditSub=this.shoppingListService.startedEditing.subscribe((
       index:number)=>
       {
-        this.id=index;
+        this.editedItemIndex=index;
         this.editMode=true;
-        this.editingIngredient=this.shoppingListService.getIngredient(this.id);
+        this.editingIngredient=this.shoppingListService.getIngredient(this.editedItemIndex);
         console.log(this.editingIngredient);
         this.slForm.setValue({
           'name':this.editingIngredient.name,
@@ -48,7 +51,7 @@ export class ShoppingEditComponent implements OnInit, OnDestroy {
 
 
   //we need to use any
-  onAddClick(form:NgForm)
+  onSubmit(form:NgForm)
   {
     
     //console.log(parseInt(amount)+5);
@@ -60,19 +63,29 @@ export class ShoppingEditComponent implements OnInit, OnDestroy {
     const value=form.value;
    
     if(this.editMode)
-      this.shoppingListService.updateIngredient(this.id, new Ingredient(value.name,value.amount));
+      this.shoppingListService.updateIngredient(this.editedItemIndex, new Ingredient(value.name,value.amount));
     else
       this.shoppingListService.addIngredientsByAmount(new Ingredient(value.name,value.amount));
 
 
+    this.editMode=false;
+    this.slForm.reset();
 
     //console.log(amount+5);
     //this.shoppingListService.ingredientNew.emit(new Ingredient(name,amount));
   }
 
-  resetForm()
+ 
+  clearForm(){
+    this.slForm.reset();
+    this.editMode=false;
+  }
+
+  onDelete()
   {
-    this.slForm.reset()
+    this.shoppingListService.deleteIngredient(this.editedItemIndex);
+ 
+    this.clearForm();
   }
 
   ngOnDestroy(): void {
