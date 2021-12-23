@@ -24,38 +24,47 @@ export class RecipeEditComponent implements OnInit {
  
 
   ngOnInit() {
-    /*this.route.queryParams.subscribe(
-        (queryParams:Params)=>{
-          this.id=+queryParams['id'];
-          console.log(this.id);
-        }
-    );*/
+    
 
     this.route.params.subscribe(
       (params:Params)=>{
     this.id=+params['id'];
     this.editMode=params['id']!=null;
+    this.initForm();   //--------------->>>>> we need to call this every time route parameters change, 
+                      //                      because that indicates that we reloaded page
   });
   
-    if(this.editMode)
-    {
-       this.recipe = this.recipeService.getRecipe(+this.route.snapshot.params['id']);
-       this.recipeName = this.recipe.name;
+
+    this.initForm();
+
+  }
+
+  private initForm(){
+    
+    let recipeName='';
+    let imagePath='';
+    let description='';
+
+    if(this.editMode){
+      const recipe=this.recipeService.getRecipe(this.id);
+
+      recipeName=recipe.name;
+      imagePath=recipe.imagePath;
+      description=recipe.description;
     }
 
     this.recipeForm=new FormGroup({
       
-      'name':new FormControl(null, [Validators.required]),
-      'description':new FormControl(null, [Validators.required])
-  
+      'name':new FormControl(recipeName, [Validators.required]),
+      'description':new FormControl(description, [Validators.required]),
+      'imagePath': new FormControl(imagePath, Validators.required)
 
     });
-
   }
 
   onSubmit()
   {
-
+      console.log(this.recipeForm);
   }
 
 }
