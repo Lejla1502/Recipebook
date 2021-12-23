@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
-import { Observable } from 'rxjs/internal/Observable';
 import { Recipe } from '../recipe.model';
 import { RecipeService } from '../recipe.service';
 
@@ -17,6 +17,8 @@ export class RecipeEditComponent implements OnInit {
 
   editMode=true;
   changesSaved=false;
+
+  recipeForm:FormGroup;
 
   constructor(private recipeService: RecipeService, private route: ActivatedRoute, private router:Router) { }
  
@@ -40,7 +42,20 @@ export class RecipeEditComponent implements OnInit {
        this.recipe = this.recipeService.getRecipe(+this.route.snapshot.params['id']);
        this.recipeName = this.recipe.name;
     }
+
+    this.recipeForm=new FormGroup({
       
+      'name':new FormControl(null, [Validators.required]),
+      'description':new FormControl(null, [Validators.required])
+  
+
+    });
+
+  }
+
+  onSubmit()
+  {
+
   }
 
 }
