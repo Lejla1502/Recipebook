@@ -1,4 +1,5 @@
 
+import { Subject } from "rxjs";
 import { Ingredient } from "../shared/ingredient.model";
 import { Recipe } from "./recipe.model";
 
@@ -6,6 +7,9 @@ import { Recipe } from "./recipe.model";
 export class RecipeService{
     //recipeSelected=new Subject<Recipe>(); //new EventEmitter<Recipe>();
 
+    recipesChanged=new Subject<Recipe[]>();
+
+    
     private recipes:Recipe[]=[
         new Recipe("Tasty Schnitzel", "this is simply a test",
         "https://upload.wikimedia.org/wikipedia/commons/5/57/990402-ians-recipe-01-IMG_4724.jpg", 
@@ -31,5 +35,17 @@ export class RecipeService{
         const recipe = this.recipes[index];
      
         return recipe;
+      }
+
+      addRecipe(recipe:Recipe)
+      {
+          this.recipes.push(recipe);
+          this.recipesChanged.next(this.recipes.slice());
+      }
+
+      updateRecipe(index:number, newRecipe:Recipe){
+        this.recipes[index]=newRecipe;
+        this.recipesChanged.next(this.recipes.slice());
+
       }
 }

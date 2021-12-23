@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
+import { Subject } from 'rxjs';
 import { Recipe } from '../recipe.model';
 import { RecipeService } from '../recipe.service';
 
@@ -17,6 +18,8 @@ export class RecipeEditComponent implements OnInit {
 
   editMode=true;
   changesSaved=false;
+
+  
 
   recipeForm:FormGroup;
 
@@ -93,8 +96,13 @@ export class RecipeEditComponent implements OnInit {
 
   onSubmit()
   {
-      console.log(this.recipeForm);
-      
+    if(this.editMode)
+     this.recipeService.updateRecipe(this.id, this.recipeForm.value);
+    else
+      this.recipeService.addRecipe(this.recipeForm.value);
+
+     this.editMode=false;
+    this.recipeForm.reset();
   }
 
 }
