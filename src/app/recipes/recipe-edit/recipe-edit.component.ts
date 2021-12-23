@@ -46,6 +46,7 @@ export class RecipeEditComponent implements OnInit {
     let description='';
     let ingredients=new FormArray([]);
 
+
     if(this.editMode){
       const recipe=this.recipeService.getRecipe(this.id);
 
@@ -58,8 +59,8 @@ export class RecipeEditComponent implements OnInit {
         {
           ingredients.push(
             new FormGroup({
-              'name': new FormControl(ingredient.name),
-              'amount': new FormControl(ingredient.amount)
+              'name': new FormControl(ingredient.name, Validators.required),
+              'amount': new FormControl(ingredient.amount, [Validators.required, Validators.pattern(/^[1-9]+[0-9]*$/)])
             })
           );
         }
@@ -68,9 +69,9 @@ export class RecipeEditComponent implements OnInit {
 
     this.recipeForm=new FormGroup({
       
-      'name':new FormControl(recipeName, [Validators.required]),
-      'description':new FormControl(description, [Validators.required]),
-      'imagePath': new FormControl(imagePath, Validators.required),
+      'name':new FormControl(recipeName, Validators.required),
+      'description':new FormControl(description, Validators.required),
+      'imagePath': new FormControl(imagePath, Validators.required ),
       'ingredients': ingredients
     });
   }
@@ -79,9 +80,21 @@ export class RecipeEditComponent implements OnInit {
     return (<FormArray>this.recipeForm.get('ingredients')).controls;
   }
 
+  onAddIngredient()
+  {
+    (<FormArray>this.recipeForm.get('ingredients')).push(
+      new FormGroup({
+        'name': new FormControl(null, Validators.required),
+        'amount': new FormControl(null, [Validators.required, Validators.pattern(/^[1-9]+[0-9]*$/)])
+      })
+    );
+  }
+   
+
   onSubmit()
   {
       console.log(this.recipeForm);
+      
   }
 
 }
