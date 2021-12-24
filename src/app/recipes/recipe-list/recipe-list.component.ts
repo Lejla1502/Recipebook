@@ -11,7 +11,6 @@ import { RecipeService } from '../recipe.service';
 })
 export class RecipeListComponent implements OnInit, OnDestroy {
 
-
   recipes:Recipe[];
   recipeChangesub:Subscription;
 

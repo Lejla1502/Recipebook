@@ -1,7 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Data, Params, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { Ingredient } from 'src/app/shared/ingredient.model';
 import { ShoppingListService } from 'src/app/shopping-list/shopping-list.service';
 import { Recipe } from '../recipe.model';
 import { RecipeService } from '../recipe.service';
@@ -26,7 +25,7 @@ export class RecipeDetailComponent implements OnInit {
    
     this.route.params.subscribe(   //different way to initialize id
       (params:Params)=>{
-       // this.id=+params['id'];
+       this.id=+params['id'];
       
         this.recipe=this.recipeService.getRecipe(+params['id']);
       }
@@ -62,10 +61,18 @@ export class RecipeDetailComponent implements OnInit {
     onDelete()
     {
       //
-      console.log(this.id);
+      console.log("Zeljeni id : "+this.id);
       this.recipeService.deleteRecipe(this.id);
      
-      //this.router.navigate(['/recipes', idNew]);
+      if(this.id>0)
+      this.router.navigate(['/recipes', this.id-1]);
+      else
+      {
+        if(this.recipeService.getRecipes().length==0)
+          this.router.navigate(['']);
+          else
+          this.router.navigate(['/recipes', this.id]);
+      }
     }
 
 }
