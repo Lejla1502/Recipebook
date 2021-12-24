@@ -93,6 +93,11 @@ export class RecipeEditComponent implements OnInit {
     );
   }
    
+  onCancelForm()
+  {
+    //this.router.navigate(['/recipes', this.id]);
+    this.router.navigate(['../'], {relativeTo: this.route});
+  }
 
   onSubmit()
   {
@@ -103,6 +108,9 @@ export class RecipeEditComponent implements OnInit {
 
      this.editMode=false;
     this.recipeForm.reset();
+
+    //this.router.navigate(['/recipes', this.id]);
+    this.onCancelForm();
   }
 
 }
