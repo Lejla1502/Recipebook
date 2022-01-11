@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-forgot-password',
@@ -9,7 +10,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 export class ForgotPasswordComponent implements OnInit {
 
   forgotPasswordForm:FormGroup;
-  constructor() { }
+  constructor(private router:Router) { }
 
   ngOnInit(): void {
     console.log("this part is getting executed");
@@ -21,7 +22,10 @@ export class ForgotPasswordComponent implements OnInit {
 
   onSubmit()
   {
-
+    if(this.forgotPasswordForm.value.password===this.forgotPasswordForm.value.repeat_password)
+       this.router.navigate(['/login']);
+       else
+       alert("potrebno je da se lozinke podudaraju");
   }
 
 }

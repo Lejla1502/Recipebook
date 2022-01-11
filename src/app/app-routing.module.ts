@@ -6,12 +6,14 @@ import { RecipeDetailComponent } from './recipes/recipe-detail/recipe-detail.com
 import { RecipeEditComponent } from './recipes/recipe-edit/recipe-edit.component';
 import { RecipeStartComponent } from './recipes/recipe-start/recipe-start.component';
 import { RecipesComponent } from './recipes/recipes.component';
+import { RegisterComponent } from './register/register.component';
 import { ShoppingListComponent } from './shopping-list/shopping-list.component';
 
 const routes: Routes = [
   {path:'', redirectTo:'/recipes', pathMatch:'full'},
   {path:'login', component: LoginComponent},
   {path:'forgot-password', component:ForgotPasswordComponent},
+  {path:'register', component:RegisterComponent},
   { path: 'recipes', component: RecipesComponent, children:[
     {path : '', component:RecipeStartComponent},
     {path:'new-recipe', component:RecipeEditComponent}, //this path MUST go before all paths with id, so it can actually work

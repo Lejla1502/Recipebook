@@ -20,6 +20,7 @@ import { RecipeService } from './recipes/recipe.service';
 import { LoginComponent } from './login/login.component';
 import { UserService } from './user.service';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
+import { RegisterComponent } from './register/register.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import { ForgotPasswordComponent } from './forgot-password/forgot-password.compo
     RecipeStartComponent,
     RecipeEditComponent,
     LoginComponent,
-    ForgotPasswordComponent
+    ForgotPasswordComponent,
+    RegisterComponent
   ],
   imports: [
     BrowserModule,
