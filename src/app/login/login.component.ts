@@ -39,6 +39,8 @@ export class LoginComponent implements OnInit {
       this.isValidUsernameOrPassword=false;
   }
 
+  onForgotPassword()
+  {}
   
 
 }
