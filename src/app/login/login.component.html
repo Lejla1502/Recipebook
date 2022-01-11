@@ -1,10 +1,10 @@
-<div class="container">
-    <div class="row">
-        <div class="col-xs-12 col-sm-10 col-md-8 col-sm-offset-1 col-md-offset-2">
+<div class="container container-class">
+    <div  class="row row-class">
+        <div class="col-xs-12 col-sm-10 col-md-8 col-sm-offset-1 col-md-offset-2 col-class">
 
-    <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
+    <form [formGroup]="signupForm" (ngSubmit)="onSubmit()" class="form-css">
     <div class="form-group">
-        <label for="username">Username: </label>
+        <label for="username" >Username: </label>
         <input type="text" formControlName="username" id="username" class="form-control">
         <span *ngIf="signupForm.get('username').errors?.required">Username is required</span>
         <!--<span *ngIf="!signupForm.get('username') && signupForm.get('username').touched">Please enter a valid username</span>-->
@@ -15,11 +15,12 @@
         <input type="text" formControlName="password" id="password" class="form-control">
         <span *ngIf="signupForm.get('password').errors?.required">Password is required</span>
 
-        <span *ngIf="!signupForm.valid && signupForm.touched">Please enter a valid username or password</span>
-
+        
+       
     </div>
-
-    <button class="btn btn-primary" type="submit">Submit</button>
+    <span *ngIf="!isValidUsernameOrPassword ">Please enter a valid username or password</span>
+    <br>
+    <button class="btn btn-primary submit" type="submit">Submit</button>
     </form>
     
         </div>
