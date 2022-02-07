@@ -1,0 +1,66 @@
+.container-class{
+    height: 80vh;
+}
+
+.row-class{
+    height: 100%;
+    width:100%;
+}
+
+.col-class{
+    height: 100%;
+    display: flex;
+    flex-direction:column;
+    align-items: center;
+    justify-content: center;
+}
+
+form
+{
+    border: 1px solid lightgray;
+
+}
+
+.form-css{
+    
+    width: 425px;
+    padding: 13px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.submit{
+    width: 70px;
+    border-radius: 4px;
+    margin-right:10px;
+}
+
+.register
+{
+    width:70px;
+    border:none !important;
+}
+.grey{
+    background-color: #e0e0e0;
+}
+
+
+
+/*hr{
+    border:1px solid grey;
+}*/
+
+h1{
+    background-color: lightgrey;
+    width:100%;
+    height: 70px;
+    margin:0px;
+    display: flex;
+    align-items: center;
+    padding-left:6px;
+}
+
+a:hover{
+    cursor: pointer;
+}

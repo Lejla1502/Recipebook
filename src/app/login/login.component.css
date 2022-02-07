@@ -18,7 +18,6 @@ form
 {
     border: 1px solid lightgray;
 
- 
 }
 
 .form-css{
@@ -52,7 +51,7 @@ form
 }*/
 
 h1{
-    background-color: #f2f2f2;
+    background-color: lightgrey;
     width:100%;
     height: 70px;
     margin:0px;

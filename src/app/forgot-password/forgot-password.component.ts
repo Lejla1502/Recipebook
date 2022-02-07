@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-forgot-password',
@@ -28,4 +29,17 @@ export class ForgotPasswordComponent implements OnInit {
        alert("potrebno je da se lozinke podudaraju");
   }
 
+
+  isPasswordValid(control:FormControl):Promise<any> | Observable<any>{
+    const promise=new Promise<any>((resolve,reject)=>{
+      setTimeout(() => {
+        if(control.value===this.forgotPasswordForm.value.repeat_password)
+          resolve({'passwordIsvalid':true});
+        else
+          resolve(null);
+      }, 1500);
+    });
+
+    return promise;
+  }
 }
