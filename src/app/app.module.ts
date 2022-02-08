@@ -23,6 +23,7 @@ import { UserService } from './user.service';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { RegisterComponent } from './register/register.component';
 import { AuthComponent } from './auth/auth/auth.component';
+import { AuthService } from './auth/auth/auth.service';
 
 @NgModule({
   declarations: [
@@ -49,7 +50,7 @@ import { AuthComponent } from './auth/auth/auth.component';
     ReactiveFormsModule,
     HttpClientModule
   ],
-  providers: [ShoppingListService, RecipeResolver, RecipeService, UserService],
+  providers: [ShoppingListService, RecipeResolver, RecipeService, UserService, AuthService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
