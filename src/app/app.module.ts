@@ -22,6 +22,7 @@ import { LoginComponent } from './login/login.component';
 import { UserService } from './user.service';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { RegisterComponent } from './register/register.component';
+import { AuthComponent } from './auth/auth/auth.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import { RegisterComponent } from './register/register.component';
     RecipeEditComponent,
     LoginComponent,
     ForgotPasswordComponent,
-    RegisterComponent
+    RegisterComponent,
+    AuthComponent
   ],
   imports: [
     BrowserModule,
