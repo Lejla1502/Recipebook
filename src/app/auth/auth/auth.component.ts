@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { onErrorResumeNext } from 'rxjs/operators';
 import { AuthService } from './auth.service';
 
 @Component({
@@ -33,9 +34,9 @@ export class AuthComponent implements OnInit {
     .subscribe(responseData=>{
       console.log(responseData);
       this.isLoading=false;
-    }, error=>{
-      console.log(error);
-      this.error="An error occured";
+    }, errorMessage=>{
+      console.log(errorMessage);
+      this.error=errorMessage;
       this.isLoading=false;
     });
    
