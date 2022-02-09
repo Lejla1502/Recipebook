@@ -47,11 +47,17 @@ export class AuthService {
                    return throwError(() => new Error(errorMessage));      //we can't access the message because the error we''re getting seems to be in a different format
             switch(errorRes.error.error.message){
                 case 'EMAIL_EXISTS':
-                  errorMessage="Email already exists";
-                //   case 'OPERATION_NOT_ALLOWED':
-                //     errorMessage="Operation not allowed";
-                //     case 'TOO_MANY_ATTEMPTS_TRY_LATER':
-                //       errorMessage="Too many wrong attempts. Try again later.";   
+                    errorMessage="Email already exists";
+                    break;
+                case 'EMAIL_NOT_FOUND':
+                  errorMessage="Email not found";
+                  break;
+                  case 'INVALID_PASSWORD':
+                    errorMessage="The password is invalid";
+                    break;
+                    case 'USER_DISABLED':
+                      errorMessage="The user account has been disabled";   
+                      break;
               }
 
               return throwError(() => new Error(errorMessage));
