@@ -3,10 +3,10 @@
         <div class="alert alert-danger" *ngIf="error">
             <p>{{error}}</p>
         </div>
-        <div *ngIf="isLoading" style="text-align: center;">
+        <!-- <div *ngIf="isLoading" style="text-align: center;">
             <app-loading-spinner ></app-loading-spinner>
-        </div>
-        <form #authForm="ngForm" (ngSubmit)="onSubmit(authForm)" *ngIf="!isLoading">
+        </div> -->
+        <form #authForm="ngForm" (ngSubmit)="onSubmit(authForm)" >
             <div class="form-group">
                 <label for="email">Email</label>
                 <input type="email" id="email" class="form-control" ngModel name="email" required email>
@@ -17,7 +17,7 @@
             </div>
             <div>
                  <button class="btn btn-primary" type="submit" [disabled]="!authForm.valid">
-                     {{ isLoginMode? 'Login' : 'Sign up'}} </button> | 
+                     {{ isLoginMode? 'Login' : 'Sign up'}} <span *ngIf="isLoading"><app-loading-spinner ></app-loading-spinner></span></button> | 
                  <button class="btn btn-primary" (click)="onSwitchMode()" type="button">Switch to {{ isLoginMode? 'Sign up' : 'Login'}}</button>
             </div>
         </form>
