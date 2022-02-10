@@ -18,6 +18,7 @@ export interface AuthResponseData{
 @Injectable({providedIn: 'root'})
 export class AuthService {
 
+    //this informs all places in app about when our user changes
     user=new Subject<User>();
     
     constructor(private http:HttpClient, private userService:UserService){}
