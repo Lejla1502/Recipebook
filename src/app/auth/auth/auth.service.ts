@@ -1,7 +1,8 @@
 import { HttpClient, HttpErrorResponse } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { catchError, throwError } from "rxjs";
+import { catchError, Subject, tap, throwError } from "rxjs";
 import { UserService } from "src/app/user.service";
+import { User } from "./user.model";
 
 //defining this interface is optional, but it is a good practice in Angular to define the type of data we're working with
 export interface AuthResponseData{
@@ -17,6 +18,8 @@ export interface AuthResponseData{
 @Injectable({providedIn: 'root'})
 export class AuthService {
 
+    user=new Subject<User>();
+    
     constructor(private http:HttpClient, private userService:UserService){}
     
     error=null;
@@ -29,7 +32,9 @@ export class AuthService {
              password:password, 
              returnSecureToken:true
         }
-        ).pipe(catchError( this.handleError));
+        ).pipe(catchError( this.handleError), tap(resData=>{
+            this.handleAuthentication(resData.email, resData.localId, resData.idToken, +resData.expiresIn)
+        }));
     }
 
     login(email:string, password:string){
@@ -38,7 +43,20 @@ export class AuthService {
             email:email,
             password:password,
             returnSecureToken:true
-        }).pipe(catchError( this.handleError));
+        }).pipe(catchError( this.handleError), tap(resData=>{
+            this.handleAuthentication(resData.email, resData.localId, resData.idToken, +resData.expiresIn)
+        }));
+    }
+
+    private handleAuthentication(email:string, userId:string, token:string, expiresIn:number){
+            //getting the current date and on that we call getTime, which is current timestamp in miliseconds 
+            //and to that we add resData.expiresIn which we have to convert to number by adding an extra plus in front of it
+            //and then we multiply it by 1000 because expiresIn is in seconds and we need miliseconds (and by multiplying we get miliseconds)
+           //this is how we get expiration date in miliseconds and by wrapping this with new Date we convert it to date object
+           const expirationDate=new Date(new Date().getTime()+ expiresIn * 1000);
+           const user=new User(email, userId, token, expirationDate);
+           //to emit this as our currently logged in user we use subject next 
+           this.user.next(user);
     }
 
     private handleError(errorRes:HttpErrorResponse){
