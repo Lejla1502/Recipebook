@@ -1,5 +1,6 @@
 import { HttpClient, HttpErrorResponse } from "@angular/common/http";
 import { Injectable } from "@angular/core";
+import { Router } from "@angular/router";
 import { BehaviorSubject, catchError, Subject, tap, throwError } from "rxjs";
 import { UserService } from "src/app/user.service";
 import { User } from "./user.model";
@@ -30,7 +31,7 @@ export class AuthService {
 
     //token:string=null;
     
-    constructor(private http:HttpClient, private userService:UserService){}
+    constructor(private http:HttpClient, private userService:UserService, private router:Router){}
     
     error=null;
 
@@ -57,6 +58,11 @@ export class AuthService {
         }).pipe(catchError( this.handleError), tap(resData=>{
             this.handleAuthentication(resData.email, resData.localId, resData.idToken, +resData.expiresIn)
         }));
+    }
+
+    logout(){
+        this.user.next(null);
+        this.router.navigate(['/auth']);
     }
 
     private handleAuthentication(email:string, userId:string, token:string, expiresIn:number){
