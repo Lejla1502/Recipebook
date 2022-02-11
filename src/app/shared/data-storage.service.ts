@@ -1,5 +1,5 @@
 import { HttpClient, HttpParams } from "@angular/common/http";
-import { Injectable } from "@angular/core";
+import { AfterViewInit, Injectable } from "@angular/core";
 import { exhaustMap, map, take, tap } from "rxjs/operators";
 import { AuthService } from "../auth/auth/auth.service";
 import { Recipe } from "../recipes/recipe.model";
@@ -10,7 +10,11 @@ export class DataStorageService {
 
     
 
-    constructor(private http:HttpClient, private recipeService:RecipeService, private authService:AuthService){}
+    constructor(private http:HttpClient, private recipeService:RecipeService, private authService:AuthService){
+        
+    }
+
+   
 
     storeRecipes(){
         const recipes=this.recipeService.getRecipes();
@@ -29,15 +33,22 @@ export class DataStorageService {
         //entire observable chain
         //in the end the entire observable chain switches to http observable which returns recipes
 
+       
+
         return this.authService.user.pipe(take(1), exhaustMap(user=>{
+            //console.log(this.http.get<Recipe[]>('https://ng-course-recipe-book-8865c-default-rtdb.firebaseio.com/recipes.json'));
             return this.http.get<Recipe[]>('https://ng-course-recipe-book-8865c-default-rtdb.firebaseio.com/recipes.json',
             {
                 params: new HttpParams().set('auth', user.token)
-            });
+            }
+            );
 
+            
         }),
         map(recipes=>{
+
             return recipes.map(recipe=>{
+               
                 return {...recipe, ingredients:recipe.ingredients?recipe.ingredients:[]};
             });
         }), 
