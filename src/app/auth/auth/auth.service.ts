@@ -48,6 +48,7 @@ export class AuthService {
     }
 
     login(email:string, password:string){
+      
         return this.http.post<AuthResponseData>('https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyCHXLqFoZLCzy04Ywy58_zJKK4h7UNxvAM',
         {
             email:email,
@@ -65,11 +66,13 @@ export class AuthService {
            //this is how we get expiration date in miliseconds and by wrapping this with new Date we convert it to date object
            const expirationDate=new Date(new Date().getTime()+ expiresIn * 1000);
            const user=new User(email, userId, token, expirationDate);
+         
            //to emit this as our currently logged in user we use subject next 
            this.user.next(user);
     }
 
     private handleError(errorRes:HttpErrorResponse){
+        console.log(errorRes);
         let errorMessage="An unknown error ocurred!";
             if(!errorRes.error || !errorRes.error.error) //if error response doesn't have error key or if it doesn't have error key on the error key
                    return throwError(() => new Error(errorMessage));      //we can't access the message because the error we''re getting seems to be in a different format

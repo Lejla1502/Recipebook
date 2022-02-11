@@ -33,18 +33,11 @@ export class DataStorageService {
         //entire observable chain
         //in the end the entire observable chain switches to http observable which returns recipes
 
-       
+        //WE'VE MOVED THIS LOOGIG IN AUTH-INTERCEPTOR SERVICE
 
-        return this.authService.user.pipe(take(1), exhaustMap(user=>{
-            //console.log(this.http.get<Recipe[]>('https://ng-course-recipe-book-8865c-default-rtdb.firebaseio.com/recipes.json'));
-            return this.http.get<Recipe[]>('https://ng-course-recipe-book-8865c-default-rtdb.firebaseio.com/recipes.json',
-            {
-                params: new HttpParams().set('auth', user.token)
-            }
-            );
-
-            
-        }),
+       // return this.authService.user.pipe(take(1), exhaustMap(user=>{
+            return this.http.get<Recipe[]>('https://ng-course-recipe-book-8865c-default-rtdb.firebaseio.com/recipes.json')
+            .pipe(
         map(recipes=>{
 
             return recipes.map(recipe=>{
