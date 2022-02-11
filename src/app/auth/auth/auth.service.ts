@@ -60,6 +60,33 @@ export class AuthService {
         }));
     }
 
+    //function that tries to automatically set user to login when the app starts and it does so by looking into the storage and checking whether
+    //there is an existing user snapshot stored
+    autoLogin(){
+        //the goal is to retrieve data from the local storage
+
+        const userData:{
+            email: string;
+            id: string;
+            _token: string;
+            _tokenExpirationDate: string;
+        }= JSON.parse(localStorage.getItem('userData'));
+
+        if(!userData)
+            return;
+
+        //the snapshot we're retrieving here is a string, so we need to now convert stringified JS object back into a JS object
+        //not into our user model - it will not have token getter method, but into a simple object literal which has all the keys
+        //that we stored in that storage
+        
+        const loadedUser=new User(userData.email, userData.id, userData._token, new Date(userData._tokenExpirationDate));
+
+        if(loadedUser.token)
+        {
+            this.user.next(loadedUser);
+        }
+    }
+
     logout(){
         this.user.next(null);
         this.router.navigate(['/auth']);
@@ -75,6 +102,11 @@ export class AuthService {
          
            //to emit this as our currently logged in user we use subject next 
            this.user.next(user);
+
+           //userData is key by which we'll later be able to rtrieve data
+           //we initially store data about user, but we need to convert that javascript object to string first (to serialize with stringify)
+           
+           localStorage.setItem('userData', JSON.stringify(user)); 
     }
 
     private handleError(errorRes:HttpErrorResponse){
