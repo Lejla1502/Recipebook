@@ -1,6 +1,6 @@
 import { HttpClient, HttpErrorResponse } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { catchError, Subject, tap, throwError } from "rxjs";
+import { BehaviorSubject, catchError, Subject, tap, throwError } from "rxjs";
 import { UserService } from "src/app/user.service";
 import { User } from "./user.model";
 
@@ -19,7 +19,16 @@ export interface AuthResponseData{
 export class AuthService {
 
     //this informs all places in app about when our user changes
-    user=new Subject<User>();
+    user=new BehaviorSubject<User>(null); //null - because we don't want to start off with user
+    
+
+    //BehaviorSubject behaves like Subject; the difference is that BehaviorSubject also gives subscribers immediate access 
+    //to the previously emitted value even if they haven't subscribed at that point of time that value was emitted
+    //That means we can get access to the currentky active user even if we only subscribe after that user has been emitted
+    //So this means when we fetch data and we need that token at this point in time, even if the user logged in before that point of time
+    //which will have benn the case, we get access to that latest user
+
+    //token:string=null;
     
     constructor(private http:HttpClient, private userService:UserService){}
     
