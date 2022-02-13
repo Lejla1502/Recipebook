@@ -19,6 +19,8 @@ export interface AuthResponseData{
 @Injectable({providedIn: 'root'})
 export class AuthService {
 
+    private tokenExpirationTimer: any;
+
     //this informs all places in app about when our user changes
     user=new BehaviorSubject<User>(null); //null - because we don't want to start off with user
     
@@ -90,6 +92,23 @@ export class AuthService {
     logout(){
         this.user.next(null);
         this.router.navigate(['/auth']);
+        localStorage.removeItem('userData'); //removing user data from local storage upon logging out
+
+        //clearing the timer (if we have an active timer)
+        if(this.tokenExpirationTimer)
+            clearTimeout(this.tokenExpirationTimer);
+        this.tokenExpirationTimer=null;
+    }
+
+    //automatically calling logout once the token expires
+    //we need to call it to make sure timer actually starts, and we do that whenever we emit a new user to our app, 
+    //i.e. whenever we use user subject
+    autoLogout(expirationDuration:number){
+        //setTimeout returns reference to the timer and we store that reference in tokenExpirationTimer
+
+        this.tokenExpirationTimer= setTimeout(()=>{
+            this.logout();
+        }, expirationDuration);
     }
 
     private handleAuthentication(email:string, userId:string, token:string, expiresIn:number){
