@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AuthComponent } from './auth/auth/auth.component';
+import { AuthGuard } from './auth/auth/auth.guard';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { LoginComponent } from './login/login.component';
 import { RecipeDetailComponent } from './recipes/recipe-detail/recipe-detail.component';
@@ -17,7 +18,9 @@ const routes: Routes = [
   {path:'login', component: LoginComponent},
   {path:'forgot-password', component:ForgotPasswordComponent},
   {path:'register', component:RegisterComponent},
-  { path: 'recipes', component: RecipesComponent, children:[
+  { path: 'recipes', component: RecipesComponent, 
+  canActivate: [AuthGuard],
+  children:[
     {path : '', component:RecipeStartComponent},
     {path:'new-recipe', component:RecipeEditComponent}, //this path MUST go before all paths with id, so it can actually work
     {path:':id', component:RecipeDetailComponent, resolve:[RecipesResolverService]},

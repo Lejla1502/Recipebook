@@ -15,7 +15,7 @@ export interface AuthResponseData{
     localId:string;
     registered?:boolean;
 }
-
+ 
 @Injectable({providedIn: 'root'})
 export class AuthService {
 
