@@ -26,6 +26,7 @@ import { AuthComponent } from './auth/auth/auth.component';
 import { AuthService } from './auth/auth/auth.service';
 import { LoadingSpinnerComponent } from './shared/loading-spinner/loading-spinner.component';
 import { AuthInterceptorService } from './auth/auth-interceptor.service';
+import { AlertComponent } from './shared/alert/alert/alert.component';
 
 @NgModule({
   declarations: [
@@ -44,7 +45,8 @@ import { AuthInterceptorService } from './auth/auth-interceptor.service';
     ForgotPasswordComponent,
     RegisterComponent,
     AuthComponent,
-    LoadingSpinnerComponent
+    LoadingSpinnerComponent,
+    AlertComponent
   ],
   imports: [
     BrowserModule,
