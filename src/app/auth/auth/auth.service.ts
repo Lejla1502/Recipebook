@@ -86,6 +86,8 @@ export class AuthService {
         if(loadedUser.token)
         {
             this.user.next(loadedUser);
+            const expirationDuration=new Date(userData._tokenExpirationDate).getTime() - new Date().getTime();
+            this.autoLogout(expirationDuration);
         }
     }
 
@@ -102,7 +104,7 @@ export class AuthService {
 
     //automatically calling logout once the token expires
     //we need to call it to make sure timer actually starts, and we do that whenever we emit a new user to our app, 
-    //i.e. whenever we use user subject
+    //i.e. whenever we use user subject (in handleAuthentication() and autoLogin())
     autoLogout(expirationDuration:number){
         //setTimeout returns reference to the timer and we store that reference in tokenExpirationTimer
 
@@ -121,6 +123,8 @@ export class AuthService {
          
            //to emit this as our currently logged in user we use subject next 
            this.user.next(user);
+
+           this.autoLogout(expiresIn * 1000);
 
            //userData is key by which we'll later be able to rtrieve data
            //we initially store data about user, but we need to convert that javascript object to string first (to serialize with stringify)
