@@ -1,7 +1,7 @@
-import { Component, ComponentFactoryResolver, OnInit, ViewChild } from '@angular/core';
+import { Component, ComponentFactoryResolver, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { onErrorResumeNext } from 'rxjs/operators';
 import { AlertComponent } from 'src/app/shared/alert/alert/alert.component';
 import { PlaceholderDirective } from 'src/app/shared/placeholder/placeholder.directive';
@@ -12,11 +12,13 @@ import { AuthResponseData, AuthService } from './auth.service';
   templateUrl: './auth.component.html',
   styleUrls: ['./auth.component.css']
 })
-export class AuthComponent implements OnInit {
+export class AuthComponent implements OnInit, OnDestroy {
 
   //to find first occurence of the PlacehloderDirective in DOM - in auth.component.html
   //we get acces to the directive we use in the template and we store that in alertHost 
   @ViewChild(PlaceholderDirective, {static : false}) alertHost: PlaceholderDirective;
+
+  private closeSub: Subscription;
 
   isLoginMode=true;
   isLoading=false;
@@ -71,8 +73,24 @@ export class AuthComponent implements OnInit {
     hostViewContainerRef.clear();
 
     //here we use our component factoryy to create a new alert component in that host view container reference
-    hostViewContainerRef.createComponent(alertCmpFactory);
-    //this now creates a new component in that place
+    //to be able to interact with our component we need to store it in new variable 
+    const componentRef= hostViewContainerRef.createComponent(alertCmpFactory);
+    //this now creates a new component in that place and is actually a reference to our component
+
+
+    //instance property gives us access to the concrete instance of this component that was created here
+    //and this instance should have the properties we added to our component (i.e. message and close)
+     componentRef.instance.message= message; //this should ensure that the message is displayed
+
+     this.closeSub= componentRef.instance.close.subscribe(()=>{
+        this.closeSub.unsubscribe();
+        hostViewContainerRef.clear();
+     });
+  }
+
+  ngOnDestroy(): void {
+      if(this.closeSub)
+        this.closeSub.unsubscribe();
   }
 
 }
