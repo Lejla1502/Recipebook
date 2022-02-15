@@ -7,6 +7,7 @@ import { RecipeEditComponent } from "./recipe-edit/recipe-edit.component";
 import { RecipeItemComponent } from "./recipe-list/recipe-item/recipe-item.component";
 import { RecipeListComponent } from "./recipe-list/recipe-list.component";
 import { RecipeStartComponent } from "./recipe-start/recipe-start.component";
+import { RecipesRoutingModule } from "./recipes-routing.module";
 import { RecipesComponent } from "./recipes.component";
 
 //NgModule decorator takes an object which we pass in to configure the module
@@ -23,7 +24,7 @@ import { RecipesComponent } from "./recipes.component";
         RecipeEditComponent
     ],
     imports: [
-        RouterModule, CommonModule, ReactiveFormsModule
+        RouterModule, CommonModule, ReactiveFormsModule, RecipesRoutingModule
     ],
     exports: [
         RecipesComponent,
