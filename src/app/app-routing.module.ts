@@ -9,7 +9,10 @@ const routes: Routes = [
   {path:'login', component: LoginComponent},
   {path:'forgot-password', component:ForgotPasswordComponent},
   {path:'register', component:RegisterComponent}, 
-  { path:'recipes', loadChildren: () => import('./recipes/recipes.module').then(x => x.RecipesModule)}
+  { path:'recipes', loadChildren: () => import('./recipes/recipes.module').then(x => x.RecipesModule)},
+  { path:'shopping-list', loadChildren: () => import('./shopping-list/shopping-list.module').then(x => x.ShoppingListModule)},
+  { path:'auth', loadChildren: () => import('./auth/auth/auth.module').then(x => x.AuthModule)}
+
 ];
 
 @NgModule({
