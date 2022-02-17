@@ -9,7 +9,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LoginComponent } from './login/login.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { RegisterComponent } from './register/register.component';
-import { ShoppingListModule } from './shopping-list/shopping-list.module';
 import { SharedModule } from './shared/shared.module';
 import { CoreModule } from './core.module';
 import { AuthModule } from './auth/auth/auth.module';
@@ -18,7 +17,7 @@ import { AuthModule } from './auth/auth/auth.module';
   declarations: [
     AppComponent,
     HeaderComponent,
-    LoginComponent,
+    LoginComponent,                                   
     ForgotPasswordComponent,
     RegisterComponent
    
@@ -30,7 +29,8 @@ import { AuthModule } from './auth/auth/auth.module';
     ReactiveFormsModule,
     HttpClientModule,
     SharedModule,
-    CoreModule
+    CoreModule,
+    AuthModule
   ],
   bootstrap: [AppComponent]
 })

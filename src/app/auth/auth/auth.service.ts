@@ -1,7 +1,7 @@
 import { HttpClient, HttpErrorResponse } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Router } from "@angular/router";
-import { BehaviorSubject, catchError, Subject, tap, throwError } from "rxjs";
+import { BehaviorSubject, catchError, tap, throwError } from "rxjs";
 import { UserService } from "src/app/user.service";
 import { User } from "./user.model";
 
@@ -16,6 +16,7 @@ export interface AuthResponseData{
     registered?:boolean;
 }
  
+
 @Injectable({providedIn: 'root'})
 export class AuthService {
 
@@ -58,6 +59,8 @@ export class AuthService {
             password:password,
             returnSecureToken:true
         }).pipe(catchError( this.handleError), tap(resData=>{
+            console.log("Resdata: ");
+            console.log(resData);
             this.handleAuthentication(resData.email, resData.localId, resData.idToken, +resData.expiresIn)
         }));
     }
@@ -73,6 +76,8 @@ export class AuthService {
             _token: string;
             _tokenExpirationDate: string;
         }= JSON.parse(localStorage.getItem('userData'));
+
+        
 
         if(!userData)
             return;
@@ -121,6 +126,8 @@ export class AuthService {
            const expirationDate=new Date(new Date().getTime()+ expiresIn * 1000);
            const user=new User(email, userId, token, expirationDate);
          
+           console.log("User from handle auth: ");
+           console.log(user);
            //to emit this as our currently logged in user we use subject next 
            this.user.next(user);
 
@@ -128,7 +135,8 @@ export class AuthService {
 
            //userData is key by which we'll later be able to rtrieve data
            //we initially store data about user, but we need to convert that javascript object to string first (to serialize with stringify)
-           
+           console.log("this.user: ");
+           console.log(this.user);
            localStorage.setItem('userData', JSON.stringify(user)); 
     }
 
