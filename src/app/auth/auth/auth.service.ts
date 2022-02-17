@@ -4,6 +4,7 @@ import { Router } from "@angular/router";
 import { BehaviorSubject, catchError, tap, throwError } from "rxjs";
 import { UserService } from "src/app/user.service";
 import { User } from "./user.model";
+import { environment } from "../../../environments/environment";
 
 //defining this interface is optional, but it is a good practice in Angular to define the type of data we're working with
 export interface AuthResponseData{
@@ -40,7 +41,7 @@ export class AuthService {
 
     signUp(email:string, password:string)
     {
-        return this.http.post<AuthResponseData>('https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyCHXLqFoZLCzy04Ywy58_zJKK4h7UNxvAM',
+        return this.http.post<AuthResponseData>('https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=' + environment.firebaseAPIKey,
         {
             email:email,
              password:password, 
@@ -53,7 +54,7 @@ export class AuthService {
 
     login(email:string, password:string){
       
-        return this.http.post<AuthResponseData>('https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyCHXLqFoZLCzy04Ywy58_zJKK4h7UNxvAM',
+        return this.http.post<AuthResponseData>('https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=' + environment.firebaseAPIKey,
         {
             email:email,
             password:password,
